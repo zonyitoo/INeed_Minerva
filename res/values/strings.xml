@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">INeed!</string>
+    <string name="button_reg_str">Reg &gt;</string>
+    <string name="button_add_account_str">NEW</string>
+    <string name="button_logon_str">Login</string>
+    <string name="label_regactivity">Register</string>
+
+</resources>

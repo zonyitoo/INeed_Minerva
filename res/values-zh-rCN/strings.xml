@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="button_reg_str">注册 &gt;</string>
+    <string name="button_add_account_str">新增</string>
+    <string name="button_logon_str">登录</string>
+    <string name="label_regactivity">注册新用户</string>
+    
+</resources>
