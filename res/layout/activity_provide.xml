@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/activity_provide_label"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:background="#123456"/>
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:background="#DDDDDD"
+        android:padding="10dp">
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center">
+            <TextView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_provide_seller_signup"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+            <TextView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="and then forget about it.\nINeed will find buyers for you!"
+                android:gravity="center"
+                />
+        </LinearLayout>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"/>
+    </LinearLayout>
+	<TextView android:layout_width="match_parent"
+	    android:layout_height="50dp"
+	    android:text="-------------------------OK------------------------"
+	    android:gravity="center"/>
+	<LinearLayout android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:background="#DDDDDD"
+        android:padding="10dp">
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center">
+            <TextView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_provide_browse_local_requests"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"/>
+            <TextView android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="And make some money for stuff you\ncan do or things you have to sell."
+                android:gravity="center"
+                />
+        </LinearLayout>
+        <TextView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=">"/>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TabHost android:id="@android:id/tabhost"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:id="@android:id/tabcontent">
+         <LinearLayout android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:id="@+id/linearlayout_mainactivity_message_buy"
+              android:layout_marginTop="90dp">
+              <ListView android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:id="@+id/listview_mainactivity_message_buy"
+                   android:layout_marginTop="90dp"></ListView>
+         </LinearLayout>
+         <LinearLayout android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:id="@+id/linearlayout_mainactivity_message_sale"
+              android:layout_marginTop="90dp">
+              <ListView android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:id="@+id/listview_mainactivity_message_sale"
+                   android:layout_marginTop="90dp"></ListView>
+         </LinearLayout>
+     </FrameLayout>
+    <RelativeLayout android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+		 <TextView android:layout_width="match_parent"
+		     android:layout_height="45dp"
+		     android:layout_alignParentTop="true"
+		     android:id="@+id/textview_mainactivity_message"
+		     android:text="@string/activity_message_label"
+		     android:gravity="center"
+		     android:textSize="20dp"
+		     android:background="#123456"/>
+         <TabWidget
+             android:id="@android:id/tabs"
+             android:layout_width="match_parent"
+             android:layout_height="45dp"
+             android:layout_below="@+id/textview_mainactivity_message"/>
+    </RelativeLayout>
+</TabHost>
