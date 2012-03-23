@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="button_reg_str">注册 &gt;</string>
-    <string name="button_add_account_str">新增</string>
-    <string name="button_logon_str">登录</string>
     <string name="label_regactivity">注册新用户</string>
+    <string name="activity_message_label">信息</string>
+    <string name="activity_request_label">需求</string>
+    <string name="activity_provide_label">帮助</string>
+    <string name="activity_provide_browse_local_requests">看周围人有什么需要的</string>
+    <string name="activity_provide_seller_signup">成为卖家</string>
+    <string name="activity_reg_label">注册新用户</string>
+    <string name="button_reg_str">加入</string>
+    <string name="button_reg_err_passwd_less_str">密码不能少于六个字符</string>
+    <string name="edittext_reg_name">用户名</string>
+    <string name="edittext_reg_passwd">6位以上16位以内的密码</string>
+    <string name="edittext_reg_passwd2">再输入一次</string>
     
 </resources>

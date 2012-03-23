@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">INeed!</string>
-    <string name="button_reg_str">Reg &gt;</string>
-    <string name="button_add_account_str">NEW</string>
-    <string name="button_logon_str">Login</string>
     <string name="label_regactivity">Register</string>
+    <string name="activity_message_label">Message</string>
+    <string name="activity_request_label">Request</string>
+    <string name="activity_provide_label">Provide</string>
+    <string name="activity_provide_seller_signup">Sign up for Seller Alerts</string>
+    <string name="activity_provide_browse_local_requests">Browse Local Requests</string>
+    <string name="activity_reg_label">Register</string>
+    <string name="button_reg_str">Register</string>
+    <string name="button_reg_err_passwd_less_str">Password no less then 6 characters</string>
+    <string name="edittext_reg_name">Your Name</string>
+    <string name="edittext_reg_passwd">Password. 6 to 16 chars</string>
+    <string name="edittext_reg_passwd2">Password once again</string>
 
 </resources>

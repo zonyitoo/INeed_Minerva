@@ -8,11 +8,12 @@
 
     <application
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" >
+        android:label="@string/app_name"
+        android:name=".core.INeedApplication" >
         <activity
             android:name=".account.LoadingActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +24,27 @@
             android:name=".account.RegActivity"
             android:label="@string/label_regactivity"
             android:theme="@android:style/Theme.Light.NoTitleBar">
-        </activity>    
+        </activity>
+        <activity 
+            android:name=".core.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Light.NoTitleBar"></activity> 
+        <activity 
+            android:name=".core.MessageActivity"
+            android:label="@string/activity_message_label"
+            android:theme="@android:style/Theme.Light.NoTitleBar"></activity>   
+        <activity 
+            android:name=".core.RequestActivity"
+            android:label="@string/activity_request_label"
+            android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity 
+            android:name=".core.ProvideActivity"
+            android:label="@string/activity_provide_label"
+            android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
+        <activity 
+            android:name=".core.UserActivity"
+            android:label=""
+            android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>
 
 </manifest>
