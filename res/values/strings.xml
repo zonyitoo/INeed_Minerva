@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">INeed!</string>
     <string name="label_regactivity">Register</string>
-    <string name="activity_message_label">Message</string>
+    <string name="activity_message_label">Messages</string>
     <string name="activity_request_label">Request</string>
     <string name="activity_provide_label">Provide</string>
     <string name="activity_provide_seller_signup">Sign up for Seller Alerts</string>
@@ -13,5 +13,6 @@
     <string name="edittext_reg_name">Your Name</string>
     <string name="edittext_reg_passwd">Password. 6 to 16 chars</string>
     <string name="edittext_reg_passwd2">Password once again</string>
+    <string name="activity_profile_label">Profile</string>
 
 </resources>

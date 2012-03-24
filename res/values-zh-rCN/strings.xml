@@ -12,5 +12,6 @@
     <string name="edittext_reg_name">用户名</string>
     <string name="edittext_reg_passwd">6位以上16位以内的密码</string>
     <string name="edittext_reg_passwd2">再输入一次</string>
+    <string name="activity_profile_label">个人资料</string>
     
 </resources>

@@ -43,7 +43,7 @@
             android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity 
             android:name=".core.UserActivity"
-            android:label=""
+            android:label="@string/activity_profile_label"
             android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>
 

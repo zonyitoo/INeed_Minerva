@@ -40,7 +40,7 @@ public class RequestDBHelper extends SQLiteOpenHelper {
 			+ C_DESCRIPTION 			+ " TEXT NOT NULL, "
 			+ C_REWARD 					+ " DOUBLE NOT NULL, "
 			+ C_REWARD_UNIT 			+ " INT NOT NULL, "
-			+ C_POST_DATE 				+ " INT NOT NULL, "
+			+ C_POST_DATE 				+ " TEXT NOT NULL, "
 			+ C_LOCATION 				+ " TEXT"
 			+ ")";
 	private static final String CREATE_REQUEST_RESPONSE = "CREATE TABLE " + REQUEST_RESPONSE + " ("
@@ -49,7 +49,7 @@ public class RequestDBHelper extends SQLiteOpenHelper {
 			+ RESPONSE_COMMENT			+ " TEXT, "
 			+ RESPONSE_PRIZE			+ " INT NOT NULL, "
 			+ RESPONSE_PRIZE_UNIT		+ " INT NOT NULL, "
-			+ RESPONSE_DATE				+ " INT"
+			+ RESPONSE_DATE				+ " TEXT"
 			+ ")";
 	private static final String CREATE_USER_REQUEST_RESPONSE_PREV = "CREATE TABLE " + REQUEST_USER_PREV;
 	private static final String CREATE_USER_REQUEST_RESPONSE_TAIL = " ("
@@ -58,7 +58,7 @@ public class RequestDBHelper extends SQLiteOpenHelper {
 			+ C_DESCRIPTION				+ " TEXT NOT NULL, "
 			+ C_REWARD					+ " DOUBLE NOT NULL, "
 			+ C_REWARD_UNIT				+ " INT NOT NULL, "
-			+ C_POST_DATE				+ " INT NOT NULL, "
+			+ C_POST_DATE				+ " TEXT NOT NULL, "
 			+ C_LOCATION				+ " TEXT"
 			+ ")";
 	

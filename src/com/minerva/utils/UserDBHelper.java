@@ -34,7 +34,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
 				+ C_GROBAL_ID		+ " INT, "
 				+ C_NAME 			+ " TEXT, "
 				+ C_PHOTO_PATH 		+ " TEXT, "
-				+ C_MEMBER_TIME 	+ " INT, "
+				+ C_MEMBER_TIME 	+ " TEXT, "
 				+ C_LIVEPLACE 		+ " TEXT, "
 				+ C_WORKPLACE 		+ " TEXT, "
 				+ C_STUDIEDPLACE 	+ " TEXT, "
