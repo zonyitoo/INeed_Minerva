@@ -50,6 +50,7 @@ public class RegActivity extends Activity implements OnClickListener {
 		startActivity(new Intent(this, MainActivity.class)
 			.putExtra(UtilConstant.PREFS_USER_NAME, userName.getText().toString())
 			.putExtra(UtilConstant.PREFS_USER_ID, user_id));
+		finish();
 	}
 
 	@Override
