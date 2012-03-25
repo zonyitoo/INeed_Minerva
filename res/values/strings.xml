@@ -14,5 +14,6 @@
     <string name="edittext_reg_passwd">Password. 6 to 16 chars</string>
     <string name="edittext_reg_passwd2">Password once again</string>
     <string name="activity_profile_label">Profile</string>
+    <string name="loading_login_err">Login error. Please Login again.</string>
 
 </resources>
