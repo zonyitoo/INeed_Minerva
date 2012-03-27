@@ -59,7 +59,8 @@
                             android:layout_height="wrap_content"
                             android:text="USER_NAME"
                             android:textSize="20dp"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold"
+                            android:id="@+id/textview_profileactivity_username"/>
                         <TextView android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="MEMBER_TIME"

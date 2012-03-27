@@ -20,6 +20,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
 	public static final String C_STUDIEDPLACE = "studied_place";			// Place of studying
 	public static final String C_RECOMMENDATION = "recommendation";			// A number, recommendation level
 	
+	public static final String[] COLUMNS =
+		{
+			C_ID, C_GROBAL_ID, C_NAME, C_PHOTO_PATH, C_NAME, C_PHOTO_PATH, C_MEMBER_TIME
+			, C_LIVEPLACE, C_WORKPLACE, C_STUDIEDPLACE, C_RECOMMENDATION
+		};
+	
 	Context context;
 	
 	public UserDBHelper(Context context) {
@@ -31,8 +37,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		String sql = "CREATE TABLE " + TABLE_NAME + " ("
 				+ C_ID 				+ " INT PRIMARY KEY, "
-				+ C_GROBAL_ID		+ " INT, "
-				+ C_NAME 			+ " TEXT, "
+				+ C_GROBAL_ID		+ " TEXT NOT NULL, "
+				+ C_NAME 			+ " TEXT NOT NULL, "
 				+ C_PHOTO_PATH 		+ " TEXT, "
 				+ C_MEMBER_TIME 	+ " TEXT, "
 				+ C_LIVEPLACE 		+ " TEXT, "

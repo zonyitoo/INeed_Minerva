@@ -180,7 +180,7 @@ public class RegActivity extends Activity implements OnClickListener {
 						Log.d(UtilConstant.DEBUG_TAG, line);
 					}
 					
-					long user_id = app.addNewUser(userName.getText().toString(), 0, "", "", "", "", 1);
+					long user_id = app.addNewUser(userName.getText().toString(), "", "", "", "", "", 1);
 					
 					startActivity(new Intent(RegActivity.this, MainActivity.class)
 						.putExtra(UtilConstant.PREFS_USER_NAME, userName.getText().toString().trim())

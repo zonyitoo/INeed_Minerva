@@ -13,11 +13,15 @@ import android.widget.TextView;
 
 import com.minerva.R;
 import com.minerva.utils.ProfileScrollView;
+import com.minerva.utils.UtilConstant;
 
 public class UserActivity extends ActivityGroup {
 
 	LinearLayout bg;
 	ProfileScrollView sv;
+	
+	TextView userName;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,6 +32,8 @@ public class UserActivity extends ActivityGroup {
 		sv = (ProfileScrollView) findViewById(R.id.scrollview_activityprofile);
 		sv.setFollowLinearLayout(bg);
 		
+		userName = (TextView) findViewById(R.id.textview_profileactivity_username);
+		userName.setText(getIntent().getExtras().getString(UtilConstant.PREFS_USER_NAME));
 	}
 
 }
