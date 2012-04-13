@@ -2,6 +2,9 @@ package com.minerva.core;
 
 import java.util.Date;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Application;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
@@ -9,9 +12,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
+import com.minerva.utils.Constants;
 import com.minerva.utils.RequestDBHelper;
 import com.minerva.utils.UserDBHelper;
-import com.minerva.utils.UtilConstant;
 
 public class INeedApplication extends Application {
 	
@@ -32,7 +35,7 @@ public class INeedApplication extends Application {
 		requestDBHelper = new RequestDBHelper(this);
 		requestDB = requestDBHelper.getWritableDatabase();
 		
-		userPrefs = getSharedPreferences(UtilConstant.LOGGED_USER_PREFS, MODE_PRIVATE);
+		userPrefs = getSharedPreferences(Constants.LOGGED_USER_PREFS, MODE_PRIVATE);
 		isLogin = false;
 	}
 
@@ -44,25 +47,25 @@ public class INeedApplication extends Application {
 		requestDB.close();
 	}
 	
-	public synchronized long addNewUser(String user_name, String user_global_id, 
-			String userLogoPath, String livePlace, String workPlace, String studiedPlace, int recommendation) {
+	public synchronized long addNewUser(JSONObject userprofile) throws JSONException {
 		ContentValues values = new ContentValues();
-		values.put(UserDBHelper.C_NAME, user_name);
-		values.put(UserDBHelper.C_GROBAL_ID, user_global_id);
-		values.put(UserDBHelper.C_PHOTO_PATH, userLogoPath);
+		values.put(UserDBHelper.C_NAME, userprofile.getString(Constants.JSON_USERNAME));
+		values.put(UserDBHelper.C_GROBAL_ID, userprofile.getString(Constants.JSON_USER_GLOBAL_ID));
+		values.put(UserDBHelper.C_SHORT_DESCRIPTION, userprofile.getString(Constants.JSON_SHORT_DESCRIPTION));
+		values.put(UserDBHelper.C_AVATAR_PATH, userprofile.getString(Constants.JSON_AVATAR_URL));
+		values.put(UserDBHelper.C_THUMBNAIL_PATH, userprofile.getString(Constants.JSON_THUMBNAIL_URL));
 		values.put(UserDBHelper.C_MEMBER_TIME, new Date().toGMTString());
-		values.put(UserDBHelper.C_LIVEPLACE, livePlace);
-		values.put(UserDBHelper.C_WORKPLACE, workPlace);
-		values.put(UserDBHelper.C_STUDIEDPLACE, studiedPlace);
-		values.put(UserDBHelper.C_RECOMMENDATION, recommendation);
+		values.put(UserDBHelper.C_LIVEPLACE, userprofile.getString(Constants.JSON_LIVE_ADDR));
+		values.put(UserDBHelper.C_WORKPLACE, userprofile.getString(Constants.JSON_WORK_ADDR));
+		values.put(UserDBHelper.C_STUDIEDPLACE, "");
+		values.put(UserDBHelper.C_RECOMMENDATION, 0);
 		
 		long user_id = userDB.insertOrThrow(UserDBHelper.TABLE_NAME, null, values);
-		userPrefs.edit().putString(UtilConstant.PREFS_USER_NAME, user_name).putLong(UtilConstant.PREFS_USER_ID, user_id).commit();
 		
 		return user_id;
 	}
 	
-	public synchronized Cursor getUserFromDatabaseByGID(String user_global_id) {
+	public synchronized Cursor getUserFromDatabaseByGrobalId(long user_global_id) {
 		Cursor cursor = userDB.query(UserDBHelper.TABLE_NAME, UserDBHelper.COLUMNS, UserDBHelper.C_GROBAL_ID + "=" + user_global_id, null, null, null, null);
 		
 		return cursor;
@@ -78,17 +81,18 @@ public class INeedApplication extends Application {
 		return cursor;
 	}
 	
-	public synchronized long modifiedUserDatabase(int user_id, String user_name, String user_global_id, 
-			String userLogoPath, String livePlace, String workPlace, String studiedPlace, int recommendation) {
+	public synchronized long modifiedUserDatabase(JSONObject userprofile, long user_id) throws JSONException {
 		ContentValues values = new ContentValues();
-		values.put(UserDBHelper.C_NAME, user_name);
-		values.put(UserDBHelper.C_GROBAL_ID, user_global_id);
-		values.put(UserDBHelper.C_PHOTO_PATH, userLogoPath);
+		values.put(UserDBHelper.C_NAME, userprofile.getString(Constants.JSON_USERNAME));
+		values.put(UserDBHelper.C_GROBAL_ID, userprofile.getString(Constants.JSON_USER_GLOBAL_ID));
+		values.put(UserDBHelper.C_SHORT_DESCRIPTION, userprofile.getString(Constants.JSON_SHORT_DESCRIPTION));
+		values.put(UserDBHelper.C_AVATAR_PATH, userprofile.getString(Constants.JSON_AVATAR_URL));
+		values.put(UserDBHelper.C_THUMBNAIL_PATH, userprofile.getString(Constants.JSON_THUMBNAIL_URL));
 		values.put(UserDBHelper.C_MEMBER_TIME, new Date().toGMTString());
-		values.put(UserDBHelper.C_LIVEPLACE, livePlace);
-		values.put(UserDBHelper.C_WORKPLACE, workPlace);
-		values.put(UserDBHelper.C_STUDIEDPLACE, studiedPlace);
-		values.put(UserDBHelper.C_RECOMMENDATION, recommendation);
+		values.put(UserDBHelper.C_LIVEPLACE, userprofile.getString(Constants.JSON_LIVE_ADDR));
+		values.put(UserDBHelper.C_WORKPLACE, userprofile.getString(Constants.JSON_WORK_ADDR));
+		values.put(UserDBHelper.C_STUDIEDPLACE, "");
+		values.put(UserDBHelper.C_RECOMMENDATION, 0);
 		
 		int numberOfRowAffected = userDB.update(UserDBHelper.TABLE_NAME, values, UserDBHelper.C_ID + "=" + user_id, null);
 		return numberOfRowAffected;

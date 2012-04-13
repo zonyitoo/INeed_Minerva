@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
-import com.minerva.utils.UtilConstant;
+import com.minerva.utils.Constants;
 
 public class UserRegister {
 	
@@ -15,7 +15,7 @@ public class UserRegister {
 	
 	public UserRegister() {
 		try {
-			registerURL = new URL(UtilConstant.SERVER_URL + "/register/");
+			registerURL = new URL(Constants.SERVER_URL + "/register/");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}

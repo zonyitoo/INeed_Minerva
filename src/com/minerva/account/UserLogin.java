@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import android.util.Log;
-import com.minerva.utils.UtilConstant;
+import com.minerva.utils.Constants;
 
 /**
  * @author zonyitoo
@@ -19,7 +19,7 @@ public class UserLogin {
 	
 	public UserLogin() {
 		try {
-			loginURL = new URL(UtilConstant.SERVER_URL + "/login/");
+			loginURL = new URL(Constants.SERVER_URL + "/login/");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -50,7 +50,7 @@ public class UserLogin {
          	writer.close();
          			
          	respCode = connection.getResponseCode();
-         	Log.d(UtilConstant.DEBUG_TAG, "respCode=" + respCode);
+         	Log.d(Constants.DEBUG_TAG, "respCode=" + respCode);
         } catch (IOException e) {
         	return -1;
          	//e.printStackTrace();

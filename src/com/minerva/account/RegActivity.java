@@ -1,16 +1,13 @@
 package com.minerva.account;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,21 +16,32 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.minerva.R;
 import com.minerva.core.INeedApplication;
 import com.minerva.core.MainActivity;
-import com.minerva.utils.UtilConstant;
+import com.minerva.utils.Constants;
+import com.minerva.utils.MinervaConnErr;
+import com.minerva.utils.Remote;
+import com.minerva.utils.UserDBHelper;
 
 public class RegActivity extends Activity implements OnClickListener {
+	
+	SharedPreferences userPrefs;
 	
 	EditText userName;
 	EditText password;
 	EditText password2;
-	ImageView userLogo;
+	EditText userEmail;
 	Button reg;
+	
+	String user_name;
+	String user_pwd;
+	String user_pwd_again;
+	String user_email;
+	String user_consumerkey;
+	String user_consumersecret;
 	
 	INeedApplication app;
 	
@@ -47,10 +55,12 @@ public class RegActivity extends Activity implements OnClickListener {
 		
 		app = (INeedApplication) getApplication();
 		
+		userPrefs = getSharedPreferences(Constants.LOGGED_USER_PREFS, MODE_PRIVATE);
+		
 		userName = (EditText) findViewById(R.id.edittext_regactivity_username);
 		password = (EditText) findViewById(R.id.edittext_regactivity_passwd);
 		password2 = (EditText) findViewById(R.id.edittext_regactivity_passwd2);
-		userLogo = (ImageView) findViewById(R.id.imageview_regactivity_userlogo);
+		userEmail = (EditText) findViewById(R.id.edittext_regactivity_email);
 		reg = (Button) findViewById(R.id.button_regactivity_reg);
 		
 		reg.setOnClickListener(this);
@@ -61,82 +71,24 @@ public class RegActivity extends Activity implements OnClickListener {
 		loadingDialog.setCancelable(false);
 	}
 
-	@Override
 	public void onClick(View v) {
+		user_name = userName.getText().toString().trim();
+		user_pwd = password.getText().toString();
+		user_pwd_again = password2.getText().toString();
+		user_email = userEmail.getText().toString().trim();
 		
-		if (!password.getText().toString().equals(password2.getText().toString())) {
+		if (user_name.isEmpty() || user_pwd.length() < 6 || user_pwd_again.isEmpty() || user_email.isEmpty()) {
+			Toast.makeText(this, "INVALID INPUT", Toast.LENGTH_LONG).show();
+			return;
+		}
+		
+		if (!user_pwd.equals(user_pwd_again)) {
 			Toast.makeText(this, "password must be the same!", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
 		loadingDialog.show();
-		new CommunicateWithServer().execute(null);
-		/*
-		final ProgressDialog progress = new ProgressDialog(this);
-		progress.setMessage("Loading");
-		progress.setCancelable(false);
-		progress.show();
-		
-		new Thread() {
-
-			@Override
-			public void run() {
-				// register
-				try {
-					URL registerURL = new URL(UtilConstant.SERVER_URL + "/register/");
-					HttpURLConnection connection = (HttpURLConnection) registerURL.openConnection();
-							
-					connection.setRequestMethod("POST");
-					connection.setInstanceFollowRedirects(true);
-					connection.setDoInput(true);
-					connection.setDoOutput(true);
-							
-					connection.connect();
-							
-					PrintWriter writer = new PrintWriter(connection.getOutputStream());
-					writer.print(userName.getText().toString().trim() + "&" + password.getText().toString() + "&" + userName.getText().toString().trim());
-					writer.flush();
-					writer.close();
-							
-					//System.out.println(connection.getResponseMessage());
-							
-					if (connection.getResponseCode() == 200) {
-						InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-						BufferedReader reader = new BufferedReader(isr);
-								
-						String line = null;
-								
-						while ((line = reader.readLine()) != null) {
-							//System.out.println(line);
-							Log.d(UtilConstant.DEBUG_TAG, line);
-						}
-						
-						long user_id = app.addNewUser(userName.getText().toString(), 0, "", "", "", "", 1);
-						
-						startActivity(new Intent(RegActivity.this, MainActivity.class)
-							.putExtra(UtilConstant.PREFS_USER_NAME, userName.getText().toString().trim())
-							.putExtra(UtilConstant.PREFS_USER_ID, user_id));
-						finish();
-					}
-					
-					else {
-						Toast.makeText(RegActivity.this, "ERROR", Toast.LENGTH_LONG).show();
-					}
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				progress.cancel();
-			}
-			
-		};
-		*/
-		
-		
+		new RegisterServer().execute(user_name, user_pwd, user_email);
 	}
 
 	@Override
@@ -147,67 +99,72 @@ public class RegActivity extends Activity implements OnClickListener {
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	class CommunicateWithServer extends AsyncTask<String, Integer, String> {
-
-		@Override
-		protected String doInBackground(String... params) {
-			try {
-				URL registerURL = new URL(UtilConstant.SERVER_URL + "/register/");
-				HttpURLConnection connection = (HttpURLConnection) registerURL.openConnection();
-						
-				connection.setRequestMethod("POST");
-				connection.setInstanceFollowRedirects(true);
-				connection.setDoInput(true);
-				connection.setDoOutput(true);
-						
-				connection.connect();
-						
-				PrintWriter writer = new PrintWriter(connection.getOutputStream());
-				writer.print(userName.getText().toString().trim() + "&" + password.getText().toString() + "&" + userName.getText().toString().trim());
-				writer.flush();
-				writer.close();
-						
-				//System.out.println(connection.getResponseMessage());
-						
-				if (connection.getResponseCode() == 200) {
-					InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-					BufferedReader reader = new BufferedReader(isr);
-							
-					String line = null;
-							
-					while ((line = reader.readLine()) != null) {
-						//System.out.println(line);
-						Log.d(UtilConstant.DEBUG_TAG, line);
-					}
-					
-					long user_id = app.addNewUser(userName.getText().toString(), "", "", "", "", "", 1);
-					
-					startActivity(new Intent(RegActivity.this, MainActivity.class)
-						.putExtra(UtilConstant.PREFS_USER_NAME, userName.getText().toString().trim())
-						.putExtra(UtilConstant.PREFS_USER_ID, user_id));
-					finish();
-				}
-				
-				else {
-					Toast.makeText(RegActivity.this, "ERROR", Toast.LENGTH_LONG).show();
-				}
-			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			return null;
+	protected long getUserId(long user_global_id) throws JSONException {
+		//INeedApplication app = (INeedApplication) getApplication();
+		Cursor cursor = app.getUserFromDatabaseByGrobalId(user_global_id);
+		JSONObject userprofile = Remote.User.getUserProfile(user_name, user_pwd, user_global_id, user_consumerkey, user_consumersecret);
+		long userid = 0;
+		if (cursor.getCount() == 0) {
+			userid = app.addNewUser(userprofile);
 		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			loadingDialog.dismiss();
+		else {
+			userid = cursor.getLong(cursor.getColumnIndex(UserDBHelper.C_ID));
+			
+			long numberOfAffectRow = app.modifiedUserDatabase(userprofile, userid);
+			Log.d(Constants.DEBUG_TAG, "RegActivity getUserId numberOfAffectRow=" + numberOfAffectRow);
 		}
 		
+		return userid;
+	}
+	
+	class RegisterServer extends AsyncTask<String, Void, Integer> {
+		
+		JSONObject response;
+		
+		@Override
+		protected Integer doInBackground(String... params) {
+			try {
+				response = Remote.User.register(params[0], params[1], params[2]);
+			} catch (MinervaConnErr e) {
+				e.printStackTrace();
+				
+				return e.errorCode();
+			}
+			return Constants.RESPONSE_SUCCEED_CODE;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			switch (result) {
+			
+			}
+
+			try {
+				JSONObject userinfo = response.getJSONObject(Constants.JSON_USERINFO);
+				Log.d(Constants.DEBUG_TAG, "RegActivity RegisterServer userinfo=" + userinfo);
+				long user_global_id = userinfo.getLong(Constants.JSON_USER_GLOBAL_ID);
+				user_consumerkey = userinfo.getString(Constants.JSON_CONSUMERKEY);
+				user_consumersecret = userinfo.getString(Constants.JSON_CONSUMERSECRET);
+				userPrefs.edit().putString(Constants.PREFS_USER_CONSUMERKEY, user_consumerkey)
+					.putString(Constants.PREFS_USER_PWD, user_pwd)
+					.putString(Constants.PREFS_USER_NAME, user_name)
+					.putString(Constants.PREFS_USER_CONSUMERSECRET, user_consumersecret)
+					.commit();
+				long userid = getUserId(user_global_id);
+				Intent intent = new Intent(RegActivity.this, MainActivity.class);
+				intent.putExtra(Constants.PREFS_USER_NAME, user_name)
+					.putExtra(Constants.PREFS_USER_ID, userid)
+					.putExtra(Constants.PREFS_USER_CONSUMERKEY, user_consumerkey)
+					.putExtra(Constants.PREFS_USER_CONSUMERSECRET, user_consumersecret);
+				startActivity(intent);
+				finish();
+			} catch (JSONException e) {
+				e.printStackTrace();
+				Toast.makeText(RegActivity.this, "postExecute JSONException", Toast.LENGTH_LONG).show();
+			}
+			loadingDialog.dismiss();
+			super.onPostExecute(result);
+		}
 		
 	}
-
 }

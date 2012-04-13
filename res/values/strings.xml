@@ -17,5 +17,6 @@
     <string name="loading_login_err">Login error. Please Login again.</string>
     <string name="edittext_login_name">Your E-mail</string>
     <string name="edittext_login_passwd">Password</string>
+    <string name="edittext_reg_email">Your E-Mail</string>
 
 </resources>

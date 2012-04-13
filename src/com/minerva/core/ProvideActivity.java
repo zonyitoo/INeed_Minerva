@@ -37,7 +37,7 @@ public class ProvideActivity extends ActivityGroup {
 		
 		around.setOnClickListener(new OnClickListener() {
 
-			@Override
+			
 			public void onClick(View v) {
 				vf.setInAnimation(rightToCenter);
 				vf.setOutAnimation(centerToLeft);

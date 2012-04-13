@@ -9,7 +9,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 import com.minerva.R;
-import com.minerva.utils.UtilConstant;
+import com.minerva.utils.Constants;
 
 public class MainActivity extends Activity {
 	TabHost maintabs;
@@ -28,30 +28,30 @@ public class MainActivity extends Activity {
 		localActivityManager.dispatchCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		user_name = getIntent().getExtras().getString(UtilConstant.PREFS_USER_NAME);
-		user_id = getIntent().getExtras().getLong(UtilConstant.PREFS_USER_ID);
+		user_name = getIntent().getExtras().getString(Constants.PREFS_USER_NAME);
+		user_id = getIntent().getExtras().getLong(Constants.PREFS_USER_ID);
 		
 		maintabs = (TabHost) findViewById(R.id.tabhost_mainactivity);
 		maintabs.setup(localActivityManager);
 		message = maintabs.newTabSpec("Message");
 		message.setContent(new Intent(this, MessageActivity.class)
-			.putExtra(UtilConstant.PREFS_USER_NAME, user_name)
-			.putExtra(UtilConstant.PREFS_USER_ID, user_id));
+			.putExtra(Constants.PREFS_USER_NAME, user_name)
+			.putExtra(Constants.PREFS_USER_ID, user_id));
 		message.setIndicator("Message");
 		request = maintabs.newTabSpec("Request");
 		request.setIndicator("Request");
 		request.setContent(new Intent(this, RequestActivity.class)
-			.putExtra(UtilConstant.PREFS_USER_NAME, user_name)
-			.putExtra(UtilConstant.PREFS_USER_ID, user_id));
+			.putExtra(Constants.PREFS_USER_NAME, user_name)
+			.putExtra(Constants.PREFS_USER_ID, user_id));
 		provide = maintabs.newTabSpec("Provide");
 		provide.setContent(new Intent(this, ProvideActivity.class)
-			.putExtra(UtilConstant.PREFS_USER_NAME, user_name)
-			.putExtra(UtilConstant.PREFS_USER_ID, user_id));
+			.putExtra(Constants.PREFS_USER_NAME, user_name)
+			.putExtra(Constants.PREFS_USER_ID, user_id));
 		provide.setIndicator("Provide");
 		user = maintabs.newTabSpec("User");
 		user.setContent(new Intent(this, UserActivity.class)
-			.putExtra(UtilConstant.PREFS_USER_NAME, user_name)
-			.putExtra(UtilConstant.PREFS_USER_ID, user_id));
+			.putExtra(Constants.PREFS_USER_NAME, user_name)
+			.putExtra(Constants.PREFS_USER_ID, user_id));
 		user.setIndicator("User");
 		maintabs.addTab(message);
 		maintabs.addTab(request);

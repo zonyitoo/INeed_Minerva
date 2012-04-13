@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.minerva.R;
 import com.minerva.utils.ProfileScrollView;
-import com.minerva.utils.UtilConstant;
+import com.minerva.utils.Constants;
 
 public class UserActivity extends ActivityGroup {
 
@@ -33,7 +33,7 @@ public class UserActivity extends ActivityGroup {
 		sv.setFollowLinearLayout(bg);
 		
 		userName = (TextView) findViewById(R.id.textview_profileactivity_username);
-		userName.setText(getIntent().getExtras().getString(UtilConstant.PREFS_USER_NAME));
+		userName.setText(getIntent().getExtras().getString(Constants.PREFS_USER_NAME));
 	}
 
 }
