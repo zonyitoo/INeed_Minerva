@@ -105,7 +105,6 @@ public class RegActivity extends Activity implements OnClickListener {
 		JSONObject userprofile = Remote.User.getUserProfile(user_name, user_pwd, user_global_id, user_consumerkey, user_consumersecret);
 		long userid = 0;
 		if (cursor.getCount() == 0) {
-			userprofile.put(Constants.JSON_USERNAME, user_name);
 			userid = app.addNewUser(userprofile);
 		}
 		else {

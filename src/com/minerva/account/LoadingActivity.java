@@ -93,21 +93,7 @@ public class LoadingActivity extends Activity{
         user_id = userPrefs.getLong(Constants.PREFS_USER_ID, -1);
         
         if (user_id != -1) {
-        	user_name = userPrefs.getString(Constants.PREFS_USER_NAME, "");
-        	user_pwd = userPrefs.getString(Constants.PREFS_USER_PWD, "");
-        	user_consumerkey = userPrefs.getString(Constants.PREFS_USER_CONSUMERKEY, "");
-        	user_consumersecret = userPrefs.getString(Constants.PREFS_USER_CONSUMERSECRET, "");
-        	user_global_id = userPrefs.getLong(Constants.PREFS_USER_GLOBAL_ID, -1);
-        	
-        	Intent intent = new Intent(this, MainActivity.class);
-        	intent.putExtra(Constants.PREFS_USER_NAME, user_name);
-        	intent.putExtra(Constants.PREFS_USER_ID, user_id);
-        	intent.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id);
-        	intent.putExtra(Constants.PREFS_USER_CONSUMERKEY, user_consumerkey);
-        	intent.putExtra(Constants.PREFS_USER_CONSUMERSECRET, user_consumersecret);
-        	
-        	startActivity(intent);
-        	this.finish();
+        	new PrepareUserData().execute();
         }
         else {
         	showLoginBox();
@@ -166,7 +152,6 @@ public class LoadingActivity extends Activity{
 		INeedApplication app = (INeedApplication) getApplication();
 		Cursor cursor = app.getUserFromDatabaseByGlobalId(user_global_id);
 		JSONObject userprofile = Remote.User.getUserProfile(user_name, user_pwd, user_global_id, user_consumerkey, user_consumersecret);
-		userprofile.put(Constants.JSON_USERNAME, user_name);
 		Log.d(Constants.DEBUG_TAG, "LoadingActivity getUserId userProfile=" + userprofile);
 		long userid = 0;
 		if (cursor.getCount() == 0) {
@@ -181,6 +166,46 @@ public class LoadingActivity extends Activity{
 		}
 				
 		return userid;
+	}
+	
+	class PrepareUserData extends AsyncTask<String, Void, Intent> {
+		
+		Intent intent;
+		
+		protected PrepareUserData() {
+			intent = new Intent(LoadingActivity.this, MainActivity.class);
+		}
+		
+		@Override
+		protected Intent doInBackground(String... params) {
+			user_name = userPrefs.getString(Constants.PREFS_USER_NAME, "");
+        	user_pwd = userPrefs.getString(Constants.PREFS_USER_PWD, "");
+        	user_consumerkey = userPrefs.getString(Constants.PREFS_USER_CONSUMERKEY, "");
+        	user_consumersecret = userPrefs.getString(Constants.PREFS_USER_CONSUMERSECRET, "");
+        	user_global_id = userPrefs.getLong(Constants.PREFS_USER_GLOBAL_ID, -1);
+        	
+        	intent.putExtra(Constants.PREFS_USER_NAME, user_name);
+        	intent.putExtra(Constants.PREFS_USER_ID, user_id);
+        	intent.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id);
+        	intent.putExtra(Constants.PREFS_USER_CONSUMERKEY, user_consumerkey);
+        	intent.putExtra(Constants.PREFS_USER_CONSUMERSECRET, user_consumersecret);
+        	
+        	try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Intent result) {
+			startActivity(intent);
+        	LoadingActivity.this.finish();
+			super.onPostExecute(result);
+		}
+		
 	}
 	
 	class LoginServer extends AsyncTask<String, Void, Integer> {
