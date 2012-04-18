@@ -35,9 +35,9 @@ I suggest you to use *NIX system to do the develop.
 
 		cd INeed_Minerva
 
-	* **/bin**  Compiled binary. .apk file is in here
-	* **/res**  Resources. Just like Pictures, XMLs..
-	* **/src**  Source code.
+* **/bin**  Compiled binary. .apk file is in here
+* **/res**  Resources. Just like Pictures, XMLs..
+* **/src**  Source code.
 
 ##Project Details
 The project is an B2B app. INeed project. It can help you to find the requests around you.
