@@ -72,8 +72,9 @@ public class ResourceDataGetter {
 			
 			connection.setRequestProperty("Authorization", header);
 			
-			//connection.connect();
+			connection.connect();
 			
+			System.out.println(connection.getResponseCode());
 			if (connection.getResponseCode() == 200) {
 				InputStreamReader isr = new InputStreamReader(connection.getInputStream());
 				BufferedReader reader = new BufferedReader(isr);

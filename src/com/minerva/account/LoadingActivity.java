@@ -1,8 +1,10 @@
 package com.minerva.account;
 
+import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -25,11 +27,9 @@ import android.widget.Toast;
 import com.minerva.R;
 import com.minerva.core.INeedApplication;
 import com.minerva.core.MainActivity;
-import com.minerva.utils.AccessTokenGetter;
 import com.minerva.utils.Constants;
 import com.minerva.utils.MinervaConnErr;
 import com.minerva.utils.Remote;
-import com.minerva.utils.ResourceDataGetter;
 import com.minerva.utils.UserDBHelper;
 
 public class LoadingActivity extends Activity{
@@ -63,7 +63,7 @@ public class LoadingActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
-        
+
         userPrefs = getSharedPreferences(Constants.LOGGED_USER_PREFS, MODE_PRIVATE);
         
         loginAllMovup = AnimationUtils.loadAnimation(this, R.anim.loading_loginall_movup);
@@ -160,6 +160,8 @@ public class LoadingActivity extends Activity{
 		INeedApplication app = (INeedApplication) getApplication();
 		Cursor cursor = app.getUserFromDatabaseByGrobalId(user_global_id);
 		JSONObject userprofile = Remote.User.getUserProfile(user_name, user_pwd, user_global_id, user_consumerkey, user_consumersecret);
+		userprofile.put(Constants.JSON_USERNAME, user_name);
+		Log.d(Constants.DEBUG_TAG, "LoadingActivity getUserId userProfile=" + userprofile);
 		long userid = 0;
 		if (cursor.getCount() == 0) {
 			userid = app.addNewUser(userprofile);
@@ -202,6 +204,7 @@ public class LoadingActivity extends Activity{
 				JSONObject userinfo = response.getJSONObject(Constants.JSON_USERINFO);
 				Log.d(Constants.DEBUG_TAG, "LoadingActivity LoginServer userinfo=" + userinfo);
 				long user_global_id = userinfo.getLong(Constants.JSON_USER_GLOBAL_ID);
+				Log.d(Constants.DEBUG_TAG, "LoadingActivity LoginServer loginUserGrobalId=" + user_global_id);
 				user_consumerkey = userinfo.getString(Constants.JSON_CONSUMERKEY);
 				user_consumersecret = userinfo.getString(Constants.JSON_CONSUMERSECRET);
 				userPrefs.edit().putString(Constants.PREFS_USER_CONSUMERKEY, user_consumerkey)

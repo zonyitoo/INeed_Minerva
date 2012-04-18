@@ -97,7 +97,6 @@ public class xAuthAccessTokenData {
             signature_base_string.length()-3);
         
         //System.out.println(signature_base_string);
-       
 		
 		/**
          * Sign the request
@@ -107,8 +106,10 @@ public class xAuthAccessTokenData {
         m.init(new SecretKeySpec((consumerSecret + "&").getBytes(), "HmacSHA1"));
         //m.update(signature_base_string.getBytes());
         byte[] res = m.doFinal(signature_base_string.getBytes());
+        //System.out.println(res.toString());
         String sig = String.valueOf(Base64.encodeToString(res, Base64.URL_SAFE | Base64.NO_WRAP));
-        
+        //String sig = String.valueOf(Base64.encodeToString(res, Base64.DEFAULT));
+        //System.out.println(sig);
         
         return sig;
 	}

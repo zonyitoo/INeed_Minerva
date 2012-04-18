@@ -155,16 +155,16 @@ public class Remote {
 		}
 	
 		public static synchronized JSONObject getUserProfile(String username, String password, long global_id, String consumerkey, String consumersecret) throws JSONException {
-			Log.d(Constants.DEBUG_TAG, "Reomte getUserProfile post to=" + Constants.SERVER_URL + Constants.ACCESS_TOKEN_URL);
 			AccessTokenGetter accessTokenGetter = new AccessTokenGetter(Constants.SERVER_URL + Constants.ACCESS_TOKEN_URL,
 					username, password, consumerkey, consumersecret);
 			String[] accessTokenData = accessTokenGetter.getAccessToken();
-			Log.d(Constants.DEBUG_TAG, "Remote getUserProfile accessTokenData=" + accessTokenData);
+			Log.d(Constants.DEBUG_TAG, "Remote getUserProfile accessTokenData=" + accessTokenData[0] + " " + accessTokenData[1]);
 			String accessToken = accessTokenData[0];
 			String accessTokenSecret = accessTokenData[1];
 			ResourceDataGetter resourceGetter = new ResourceDataGetter(Constants.SERVER_URL + Constants.GET_USER_PROFILE_URL + global_id + "/",
 					accessToken, accessTokenSecret, consumerkey, consumersecret, "GET");
 			String server_response = resourceGetter.getResource();
+			Log.d(Constants.DEBUG_TAG, "Remote getUserPorfile get server_respose=" + server_response);
 			return new JSONObject((String) (new JSONTokener(server_response)).nextValue());
 		}
 	}
