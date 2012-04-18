@@ -76,6 +76,20 @@
                             android:layout_height="wrap_content"
                             android:text="STUDIED_PLACE"/>
                     </LinearLayout>
+                    
+                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="60dp">
+                        <Button android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="SET USER PROFILE"
+                            android:id="@+id/button_profileactivity_setprofile"/>
+                  		<Button android:layout_width="match_parent"
+                  		    android:layout_height="wrap_content"
+                  		    android:text="LOGOUT"
+                  		    android:id="@+id/button_profileactivity_logout"/>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </com.minerva.utils.ProfileScrollView>

@@ -167,7 +167,7 @@ public class xAuthResourceData {
         m.init(new SecretKeySpec((consumerSecret + "&" + tokenSecret).getBytes(), "HmacSHA1"));
         //m.update(signature_base_string.getBytes());
         byte[] res = m.doFinal(signature_base_string.getBytes());
-        String sig = String.valueOf(Base64.encodeToString(res, Base64.DEFAULT));
+        String sig = String.valueOf(Base64.encodeToString(res, Base64.NO_WRAP | Base64.URL_SAFE));
         
         return sig;
 	}

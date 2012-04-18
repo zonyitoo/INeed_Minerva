@@ -7,6 +7,7 @@ public class Constants {
 	public static final String LOGGED_USER_PREFS 		= "logged_user_prefs";
 	public static final String PREFS_USER_NAME 			= "user_name";
 	public static final String PREFS_USER_ID 			= "user_id";
+	public static final String PREFS_USER_GLOBAL_ID		= "user_global_id";
 	public static final String PREFS_USER_PWD			= "user_pwd";
 	public static final String PREFS_USER_CONSUMERKEY	= "user_consumer_key";
 	public static final String PREFS_USER_CONSUMERSECRET= "user_consumer_secret";

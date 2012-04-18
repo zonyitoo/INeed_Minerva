@@ -11,8 +11,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.util.Base64;
 
+import com.minerva.account.LoadingActivity;
 import com.minerva.utils.Constants;
 import com.minerva.utils.RequestDBHelper;
 import com.minerva.utils.UserDBHelper;
@@ -28,6 +28,8 @@ public class INeedApplication extends Application {
 	
 	private boolean isLogin;
 	
+	public LoadingActivity mloadingActivity;
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -38,6 +40,7 @@ public class INeedApplication extends Application {
 		
 		userPrefs = getSharedPreferences(Constants.LOGGED_USER_PREFS, MODE_PRIVATE);
 		isLogin = false;
+		mloadingActivity = null;
 	}
 
 	@Override
@@ -53,8 +56,10 @@ public class INeedApplication extends Application {
 		values.put(UserDBHelper.C_NAME, userprofile.getString(Constants.JSON_USERNAME));
 		values.put(UserDBHelper.C_GROBAL_ID, userprofile.getString(Constants.JSON_USER_GLOBAL_ID));
 		values.put(UserDBHelper.C_SHORT_DESCRIPTION, userprofile.getString(Constants.JSON_SHORT_DESCRIPTION));
-		values.put(UserDBHelper.C_AVATAR_PATH, userprofile.getString(Constants.JSON_AVATAR_URL));
-		values.put(UserDBHelper.C_THUMBNAIL_PATH, userprofile.getString(Constants.JSON_THUMBNAIL_URL));
+		if (userprofile.has(Constants.JSON_AVATAR_URL))
+			values.put(UserDBHelper.C_AVATAR_PATH, userprofile.getString(Constants.JSON_AVATAR_URL));
+		if (userprofile.has(Constants.JSON_THUMBNAIL_URL))
+			values.put(UserDBHelper.C_THUMBNAIL_PATH, userprofile.getString(Constants.JSON_THUMBNAIL_URL));
 		values.put(UserDBHelper.C_MEMBER_TIME, new Date().toGMTString());
 		values.put(UserDBHelper.C_LIVEPLACE, userprofile.getString(Constants.JSON_LIVE_ADDR));
 		values.put(UserDBHelper.C_WORKPLACE, userprofile.getString(Constants.JSON_WORK_ADDR));
@@ -66,7 +71,7 @@ public class INeedApplication extends Application {
 		return user_id;
 	}
 	
-	public synchronized Cursor getUserFromDatabaseByGrobalId(long user_global_id) {
+	public synchronized Cursor getUserFromDatabaseByGlobalId(long user_global_id) {
 		Cursor cursor = userDB.query(UserDBHelper.TABLE_NAME, UserDBHelper.COLUMNS, UserDBHelper.C_GROBAL_ID + "=" + user_global_id, null, null, null, null);
 		
 		return cursor;
@@ -87,8 +92,10 @@ public class INeedApplication extends Application {
 		values.put(UserDBHelper.C_NAME, userprofile.getString(Constants.JSON_USERNAME));
 		values.put(UserDBHelper.C_GROBAL_ID, userprofile.getString(Constants.JSON_USER_GLOBAL_ID));
 		values.put(UserDBHelper.C_SHORT_DESCRIPTION, userprofile.getString(Constants.JSON_SHORT_DESCRIPTION));
-		values.put(UserDBHelper.C_AVATAR_PATH, userprofile.getString(Constants.JSON_AVATAR_URL));
-		values.put(UserDBHelper.C_THUMBNAIL_PATH, userprofile.getString(Constants.JSON_THUMBNAIL_URL));
+		if (userprofile.has(Constants.JSON_AVATAR_URL))
+			values.put(UserDBHelper.C_AVATAR_PATH, userprofile.getString(Constants.JSON_AVATAR_URL));
+		if (userprofile.has(Constants.JSON_THUMBNAIL_URL))
+			values.put(UserDBHelper.C_THUMBNAIL_PATH, userprofile.getString(Constants.JSON_THUMBNAIL_URL));
 		values.put(UserDBHelper.C_MEMBER_TIME, new Date().toGMTString());
 		values.put(UserDBHelper.C_LIVEPLACE, userprofile.getString(Constants.JSON_LIVE_ADDR));
 		values.put(UserDBHelper.C_WORKPLACE, userprofile.getString(Constants.JSON_WORK_ADDR));

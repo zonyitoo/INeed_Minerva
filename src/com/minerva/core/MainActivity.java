@@ -21,6 +21,9 @@ public class MainActivity extends Activity {
 	
 	String user_name;
 	long user_id;
+	long user_global_id;
+	String consumerkey;
+	String consumersecret;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,28 +33,43 @@ public class MainActivity extends Activity {
 		
 		user_name = getIntent().getExtras().getString(Constants.PREFS_USER_NAME);
 		user_id = getIntent().getExtras().getLong(Constants.PREFS_USER_ID);
+		user_global_id = getIntent().getExtras().getLong(Constants.PREFS_USER_GLOBAL_ID);
+		consumerkey = getIntent().getExtras().getString(Constants.PREFS_USER_CONSUMERKEY);
+		consumersecret = getIntent().getExtras().getString(Constants.PREFS_USER_CONSUMERSECRET);
 		
 		maintabs = (TabHost) findViewById(R.id.tabhost_mainactivity);
 		maintabs.setup(localActivityManager);
 		message = maintabs.newTabSpec("Message");
 		message.setContent(new Intent(this, MessageActivity.class)
 			.putExtra(Constants.PREFS_USER_NAME, user_name)
-			.putExtra(Constants.PREFS_USER_ID, user_id));
+			.putExtra(Constants.PREFS_USER_ID, user_id)
+			.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id)
+			.putExtra(Constants.PREFS_USER_CONSUMERKEY, consumerkey)
+			.putExtra(Constants.PREFS_USER_CONSUMERSECRET, consumersecret));
 		message.setIndicator("Message");
 		request = maintabs.newTabSpec("Request");
 		request.setIndicator("Request");
 		request.setContent(new Intent(this, RequestActivity.class)
 			.putExtra(Constants.PREFS_USER_NAME, user_name)
-			.putExtra(Constants.PREFS_USER_ID, user_id));
+			.putExtra(Constants.PREFS_USER_ID, user_id)
+			.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id)
+			.putExtra(Constants.PREFS_USER_CONSUMERKEY, consumerkey)
+			.putExtra(Constants.PREFS_USER_CONSUMERSECRET, consumersecret));
 		provide = maintabs.newTabSpec("Provide");
 		provide.setContent(new Intent(this, ProvideActivity.class)
 			.putExtra(Constants.PREFS_USER_NAME, user_name)
-			.putExtra(Constants.PREFS_USER_ID, user_id));
+			.putExtra(Constants.PREFS_USER_ID, user_id)
+			.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id)
+			.putExtra(Constants.PREFS_USER_CONSUMERKEY, consumerkey)
+			.putExtra(Constants.PREFS_USER_CONSUMERSECRET, consumersecret));
 		provide.setIndicator("Provide");
 		user = maintabs.newTabSpec("User");
 		user.setContent(new Intent(this, UserActivity.class)
 			.putExtra(Constants.PREFS_USER_NAME, user_name)
-			.putExtra(Constants.PREFS_USER_ID, user_id));
+			.putExtra(Constants.PREFS_USER_ID, user_id)
+			.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id)
+			.putExtra(Constants.PREFS_USER_CONSUMERKEY, consumerkey)
+			.putExtra(Constants.PREFS_USER_CONSUMERSECRET, consumersecret));
 		user.setIndicator("User");
 		maintabs.addTab(message);
 		maintabs.addTab(request);

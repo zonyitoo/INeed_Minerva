@@ -101,13 +101,15 @@ public class RegActivity extends Activity implements OnClickListener {
 	
 	protected long getUserId(long user_global_id) throws JSONException {
 		//INeedApplication app = (INeedApplication) getApplication();
-		Cursor cursor = app.getUserFromDatabaseByGrobalId(user_global_id);
+		Cursor cursor = app.getUserFromDatabaseByGlobalId(user_global_id);
 		JSONObject userprofile = Remote.User.getUserProfile(user_name, user_pwd, user_global_id, user_consumerkey, user_consumersecret);
 		long userid = 0;
 		if (cursor.getCount() == 0) {
+			userprofile.put(Constants.JSON_USERNAME, user_name);
 			userid = app.addNewUser(userprofile);
 		}
 		else {
+			cursor.moveToFirst();
 			userid = cursor.getLong(cursor.getColumnIndex(UserDBHelper.C_ID));
 			
 			long numberOfAffectRow = app.modifiedUserDatabase(userprofile, userid);
@@ -145,22 +147,31 @@ public class RegActivity extends Activity implements OnClickListener {
 				long user_global_id = userinfo.getLong(Constants.JSON_USER_GLOBAL_ID);
 				user_consumerkey = userinfo.getString(Constants.JSON_CONSUMERKEY);
 				user_consumersecret = userinfo.getString(Constants.JSON_CONSUMERSECRET);
+				long userid = getUserId(user_global_id);
+				
 				userPrefs.edit().putString(Constants.PREFS_USER_CONSUMERKEY, user_consumerkey)
 					.putString(Constants.PREFS_USER_PWD, user_pwd)
 					.putString(Constants.PREFS_USER_NAME, user_name)
 					.putString(Constants.PREFS_USER_CONSUMERSECRET, user_consumersecret)
+					.putLong(Constants.PREFS_USER_ID, userid)
+					.putLong(Constants.PREFS_USER_GLOBAL_ID, user_global_id)
 					.commit();
-				long userid = getUserId(user_global_id);
 				Intent intent = new Intent(RegActivity.this, MainActivity.class);
 				intent.putExtra(Constants.PREFS_USER_NAME, user_name)
 					.putExtra(Constants.PREFS_USER_ID, userid)
+					.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id)
 					.putExtra(Constants.PREFS_USER_CONSUMERKEY, user_consumerkey)
 					.putExtra(Constants.PREFS_USER_CONSUMERSECRET, user_consumersecret);
 				startActivity(intent);
+				if (((INeedApplication) getApplication()).mloadingActivity != null)
+					((INeedApplication) getApplication()).mloadingActivity.finish();
 				finish();
 			} catch (JSONException e) {
 				e.printStackTrace();
 				Toast.makeText(RegActivity.this, "postExecute JSONException", Toast.LENGTH_LONG).show();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				Toast.makeText(RegActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 			}
 			loadingDialog.dismiss();
 			super.onPostExecute(result);

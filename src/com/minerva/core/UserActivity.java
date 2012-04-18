@@ -1,19 +1,19 @@
 package com.minerva.core;
 
 import android.app.ActivityGroup;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.minerva.R;
-import com.minerva.utils.ProfileScrollView;
+import com.minerva.account.LoadingActivity;
 import com.minerva.utils.Constants;
+import com.minerva.utils.ProfileScrollView;
 
 public class UserActivity extends ActivityGroup {
 
@@ -21,6 +21,9 @@ public class UserActivity extends ActivityGroup {
 	ProfileScrollView sv;
 	
 	TextView userName;
+	
+	Button setProfile;
+	Button logout;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,32 @@ public class UserActivity extends ActivityGroup {
 		
 		userName = (TextView) findViewById(R.id.textview_profileactivity_username);
 		userName.setText(getIntent().getExtras().getString(Constants.PREFS_USER_NAME));
+		setProfile = (Button) findViewById(R.id.button_profileactivity_setprofile);
+		logout = (Button) findViewById(R.id.button_profileactivity_logout);
+		setButtonListener();
 	}
+	
+	
+	void setButtonListener() {
+		setProfile.setOnClickListener(new OnClickListener() {
 
+			public void onClick(View v) {
+				
+				
+			}
+			
+		});
+		
+		logout.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				SharedPreferences userPrefs = getSharedPreferences(Constants.LOGGED_USER_PREFS, MODE_PRIVATE);
+				userPrefs.edit().remove(Constants.PREFS_USER_ID).commit();
+				
+				startActivity(new Intent(UserActivity.this, LoadingActivity.class));
+				UserActivity.this.finish();
+			}
+			
+		});
+	}
 }

@@ -40,6 +40,7 @@ public class LoadingActivity extends Activity{
 	String user_pwd;
 	String user_consumerkey;
 	String user_consumersecret;
+	long user_global_id;
 	
 	ConnectivityManager conMan;
 	
@@ -63,7 +64,9 @@ public class LoadingActivity extends Activity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
-
+        
+        ((INeedApplication) getApplication()).mloadingActivity = this;
+        
         userPrefs = getSharedPreferences(Constants.LOGGED_USER_PREFS, MODE_PRIVATE);
         
         loginAllMovup = AnimationUtils.loadAnimation(this, R.anim.loading_loginall_movup);
@@ -94,10 +97,12 @@ public class LoadingActivity extends Activity{
         	user_pwd = userPrefs.getString(Constants.PREFS_USER_PWD, "");
         	user_consumerkey = userPrefs.getString(Constants.PREFS_USER_CONSUMERKEY, "");
         	user_consumersecret = userPrefs.getString(Constants.PREFS_USER_CONSUMERSECRET, "");
+        	user_global_id = userPrefs.getLong(Constants.PREFS_USER_GLOBAL_ID, -1);
         	
         	Intent intent = new Intent(this, MainActivity.class);
         	intent.putExtra(Constants.PREFS_USER_NAME, user_name);
         	intent.putExtra(Constants.PREFS_USER_ID, user_id);
+        	intent.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id);
         	intent.putExtra(Constants.PREFS_USER_CONSUMERKEY, user_consumerkey);
         	intent.putExtra(Constants.PREFS_USER_CONSUMERSECRET, user_consumersecret);
         	
@@ -108,14 +113,15 @@ public class LoadingActivity extends Activity{
         	showLoginBox();
         }
     }
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		
-		//startActivity(new Intent(this, MainActivity.class));
-	}
 	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		
+		((INeedApplication) getApplication()).mloadingActivity = null;
+	}
+
 	private void showLoginBox() {
 		showLoginPanel = true;
 		
@@ -158,7 +164,7 @@ public class LoadingActivity extends Activity{
 	
 	protected synchronized long getUserId(long user_global_id) throws JSONException {
 		INeedApplication app = (INeedApplication) getApplication();
-		Cursor cursor = app.getUserFromDatabaseByGrobalId(user_global_id);
+		Cursor cursor = app.getUserFromDatabaseByGlobalId(user_global_id);
 		JSONObject userprofile = Remote.User.getUserProfile(user_name, user_pwd, user_global_id, user_consumerkey, user_consumersecret);
 		userprofile.put(Constants.JSON_USERNAME, user_name);
 		Log.d(Constants.DEBUG_TAG, "LoadingActivity getUserId userProfile=" + userprofile);
@@ -167,6 +173,7 @@ public class LoadingActivity extends Activity{
 			userid = app.addNewUser(userprofile);
 		}
 		else {
+			cursor.moveToFirst();
 			userid = cursor.getLong(cursor.getColumnIndex(UserDBHelper.C_ID));
 					
 			long numberOfAffectRow = app.modifiedUserDatabase(userprofile, userid);
@@ -200,6 +207,7 @@ public class LoadingActivity extends Activity{
 				return;
 				
 			}
+			loginProgress.setMessage("PULLING USER DATA");
 			try {
 				JSONObject userinfo = response.getJSONObject(Constants.JSON_USERINFO);
 				Log.d(Constants.DEBUG_TAG, "LoadingActivity LoginServer userinfo=" + userinfo);
@@ -211,18 +219,26 @@ public class LoadingActivity extends Activity{
 					.putString(Constants.PREFS_USER_PWD, user_pwd)
 					.putString(Constants.PREFS_USER_NAME, user_name)
 					.putString(Constants.PREFS_USER_CONSUMERSECRET, user_consumersecret)
+					.putLong(Constants.PREFS_USER_GLOBAL_ID, user_global_id)
 					.commit();
 				long userid = getUserId(user_global_id);
+				userPrefs.edit().putLong(Constants.PREFS_USER_ID, userid).commit();
 				Intent intent = new Intent(LoadingActivity.this, MainActivity.class);
 				intent.putExtra(Constants.PREFS_USER_NAME, user_name)
 					.putExtra(Constants.PREFS_USER_ID, userid)
+					.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id)
 					.putExtra(Constants.PREFS_USER_CONSUMERKEY, user_consumerkey)
 					.putExtra(Constants.PREFS_USER_CONSUMERSECRET, user_consumersecret);
 				startActivity(intent);
+				LoadingActivity.this.finish();
 			} catch (JSONException e) {
 				e.printStackTrace();
-				Toast.makeText(LoadingActivity.this, "postExecution JSONException", Toast.LENGTH_LONG).show();
+				Toast.makeText(LoadingActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				Toast.makeText(LoadingActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
 			}
+			loginProgress.dismiss();
 			super.onPostExecute(result);
 		}
 	}
