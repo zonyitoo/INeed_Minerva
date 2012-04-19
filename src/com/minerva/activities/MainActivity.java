@@ -1,4 +1,4 @@
-package com.minerva.core;
+package com.minerva.activities;
 
 import android.app.Activity;
 import android.app.LocalActivityManager;

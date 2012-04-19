@@ -1,4 +1,4 @@
-package com.minerva.core;
+package com.minerva.activities;
 
 import android.app.ActivityGroup;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.minerva.R;
-import com.minerva.account.LoadingActivity;
 import com.minerva.utils.Constants;
 import com.minerva.utils.ProfileScrollView;
 

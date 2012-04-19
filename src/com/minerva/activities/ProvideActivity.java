@@ -1,4 +1,4 @@
-package com.minerva.core;
+package com.minerva.activities;
 
 import android.app.ActivityGroup;
 import android.os.Bundle;

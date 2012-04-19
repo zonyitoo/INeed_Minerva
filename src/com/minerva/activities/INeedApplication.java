@@ -1,4 +1,4 @@
-package com.minerva.core;
+package com.minerva.activities;
 
 import java.util.Date;
 
@@ -12,7 +12,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
-import com.minerva.account.LoadingActivity;
 import com.minerva.utils.Constants;
 import com.minerva.utils.RequestDBHelper;
 import com.minerva.utils.UserDBHelper;

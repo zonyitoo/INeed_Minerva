@@ -9,9 +9,9 @@
     <application
         android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:name=".core.INeedApplication" >
+        android:name=".activities.INeedApplication" >
         <activity
-            android:name=".account.LoadingActivity"
+            android:name=".core.LoadingActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
             <intent-filter>
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity 
-            android:name=".account.RegActivity"
+            android:name=".core.RegActivity"
             android:label="@string/label_regactivity"
             android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
@@ -42,7 +42,7 @@
             android:label="@string/activity_provide_label"
             android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity 
-            android:name=".core.UserActivity"
+            android:name=".activities.UserActivity"
             android:label="@string/activity_profile_label"
             android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>

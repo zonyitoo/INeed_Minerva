@@ -1,4 +1,4 @@
-package com.minerva.core;
+package com.minerva.activities;
 
 import android.app.TabActivity;
 import android.os.Bundle;

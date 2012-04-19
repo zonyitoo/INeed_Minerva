@@ -1,4 +1,4 @@
-package com.minerva.account;
+package com.minerva.activities;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,8 +19,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.minerva.R;
-import com.minerva.core.INeedApplication;
-import com.minerva.core.MainActivity;
+import com.minerva.R.id;
+import com.minerva.R.layout;
 import com.minerva.utils.Constants;
 import com.minerva.utils.MinervaConnErr;
 import com.minerva.utils.Remote;
