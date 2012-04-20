@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
 			.putExtra(Constants.PREFS_USER_CONSUMERSECRET, consumersecret));
 		provide.setIndicator("Provide");
 		user = maintabs.newTabSpec("User");
-		user.setContent(new Intent(this, UserActivity.class)
+		user.setContent(new Intent(this, ProfileActivity.class)
 			.putExtra(Constants.PREFS_USER_NAME, user_name)
 			.putExtra(Constants.PREFS_USER_ID, user_id)
 			.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id)

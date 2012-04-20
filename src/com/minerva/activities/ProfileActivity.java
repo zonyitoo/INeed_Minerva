@@ -14,7 +14,7 @@ import com.minerva.R;
 import com.minerva.utils.Constants;
 import com.minerva.utils.ProfileScrollView;
 
-public class UserActivity extends ActivityGroup {
+public class ProfileActivity extends ActivityGroup {
 
 	LinearLayout bg;
 	ProfileScrollView sv;
@@ -23,6 +23,12 @@ public class UserActivity extends ActivityGroup {
 	
 	Button setProfile;
 	Button logout;
+	
+	String user_name;
+	long user_id;
+	long user_global_id;
+	String consumerkey;
+	String consumersecret;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,12 @@ public class UserActivity extends ActivityGroup {
 		bg = (LinearLayout) findViewById(R.id.linearlayout_activityprofile_logo);
 		sv = (ProfileScrollView) findViewById(R.id.scrollview_activityprofile);
 		sv.setFollowLinearLayout(bg);
+		
+		user_name = getIntent().getExtras().getString(Constants.PREFS_USER_NAME);
+		user_id = getIntent().getExtras().getLong(Constants.PREFS_USER_ID);
+		user_global_id = getIntent().getExtras().getLong(Constants.PREFS_USER_GLOBAL_ID);
+		consumerkey = getIntent().getExtras().getString(Constants.PREFS_USER_CONSUMERKEY);
+		consumersecret = getIntent().getExtras().getString(Constants.PREFS_USER_CONSUMERSECRET);
 		
 		userName = (TextView) findViewById(R.id.textview_profileactivity_username);
 		userName.setText(getIntent().getExtras().getString(Constants.PREFS_USER_NAME));
@@ -47,6 +59,13 @@ public class UserActivity extends ActivityGroup {
 
 			public void onClick(View v) {
 				
+				Intent intent = new Intent(ProfileActivity.this, ChangeProfileActivity.class);
+				intent.putExtra(Constants.PREFS_USER_ID, user_id)
+					.putExtra(Constants.PREFS_USER_GLOBAL_ID, user_global_id)
+					.putExtra(Constants.PREFS_USER_CONSUMERKEY, consumerkey)
+					.putExtra(Constants.PREFS_USER_CONSUMERSECRET, consumersecret)
+					.putExtra(Constants.PREFS_USER_NAME, user_name);
+				startActivity(intent);
 				
 			}
 			
@@ -58,8 +77,8 @@ public class UserActivity extends ActivityGroup {
 				SharedPreferences userPrefs = getSharedPreferences(Constants.LOGGED_USER_PREFS, MODE_PRIVATE);
 				userPrefs.edit().remove(Constants.PREFS_USER_ID).commit();
 				
-				startActivity(new Intent(UserActivity.this, LoadingActivity.class));
-				UserActivity.this.finish();
+				startActivity(new Intent(ProfileActivity.this, LoadingActivity.class));
+				ProfileActivity.this.finish();
 			}
 			
 		});

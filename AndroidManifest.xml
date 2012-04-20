@@ -42,7 +42,7 @@
             android:label="@string/activity_provide_label"
             android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
         <activity 
-            android:name=".activities.UserActivity"
+            android:name=".activities.ProfileActivity"
             android:label="@string/activity_profile_label"
             android:theme="@android:style/Theme.Light.NoTitleBar"></activity>
     </application>

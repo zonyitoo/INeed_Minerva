@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/linearlayout_activityprofile_logo"
+        android:animationCache="true">
+        <ImageView android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:src="@drawable/default_profile_logo"/>
+            
+    </LinearLayout>
+        
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+            
+   		<com.minerva.utils.ProfileScrollView android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+        	android:layout_marginTop="45dp"
+            android:id="@+id/scrollview_activityprofile">
+            <LinearLayout android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <View android:layout_width="match_parent"
+                	android:layout_height="180dp"/>
+                
+                <LinearLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="#EEEEEE"
+                    android:padding="10dp">
+                    
+                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="USER_NAME"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:id="@+id/textview_profileactivity_username"/>
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="MEMBER_TIME"
+                            />
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="LIVING_PLACE"
+                            />
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="WORKING_PLACE"/>
+                        <TextView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="STUDIED_PLACE"/>
+                    </LinearLayout>
+                    
+                    <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="60dp">
+                        <Button android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="SET USER PROFILE"
+                            android:id="@+id/button_profileactivity_setprofile"/>
+                  		<Button android:layout_width="match_parent"
+                  		    android:layout_height="wrap_content"
+                  		    android:text="LOGOUT"
+                  		    android:id="@+id/button_profileactivity_logout"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.minerva.utils.ProfileScrollView>
+    </LinearLayout>
+        
+    <TextView android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/activity_profile_label"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:background="#123456"/>
+</FrameLayout>
